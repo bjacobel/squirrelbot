@@ -4,7 +4,8 @@
   "description": "Convert GitHub emails to Slack notifications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "webpack -c",
+    "deploy": "npm run webpack && ./deploy.sh"
   },
   "repository": {
     "type": "git",
@@ -14,5 +15,15 @@
   "license": "MIT",
   "dependencies": {
     "vinz": "0.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015-node4": "^2.1.0",
+    "eslint": "^3.1.1",
+    "eslint-config-airbnb-base": "^5.0.0",
+    "eslint-plugin-import": "^1.12.0",
+    "json-loader": "^0.5.4",
+    "webpack": "^1.13.1"
   }
 }
