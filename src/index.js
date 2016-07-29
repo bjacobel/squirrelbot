@@ -1,6 +1,13 @@
 import request from 'request';
+import { parse } from 'querystring';
 
 export const handler = (event, context, callback) => {  // eslint-disable-line import/prefer-default-export
+  const jsonEvent = parse(event.message);
+
+  const message = jsonEvent['body-plain'];
+  const userMessage = message.split('---').slice(0, -1).join('---');
+  const githubLink = message.match(/https:\/\/github.com\/.*$/)[0];
+
   request(
     {
       baseUrl: 'https://hooks.slack.com/',
@@ -8,32 +15,33 @@ export const handler = (event, context, callback) => {  // eslint-disable-line i
       method: 'POST',
       json: true,
       body: {
-        text: JSON.stringify(event)
+        text: `*${jsonEvent.subject}*`,
+        mrkdwn: true,
+        username: jsonEvent.from.split('<')[0].trim(),
+        attachments: [
+          {
+            text: userMessage,
+            mrkdwn_in: [
+              'text'
+            ]
+          },
+          {
+            text: `<${githubLink}|View on GitHub>`
+          }
+        ]
       }
     },
     (error, response, body) => {
       if (error) {
         callback(JSON.stringify(error));
       } else if (response.statusCode !== 200) {
-        callback({
+        callback(JSON.stringify({
           code: response.statusCode,
           body
-        });
+        }));
       } else {
         callback(null, { success: true });
       }
     }
   );
 };
-
-// {
-//   text: 'I am a test message to <http://slack.com|Slack>',
-//   attachments: [
-//     {
-//       text: "And here's an attachment!",
-//       mrkdwn_in: [
-//         'text'
-//       ]
-//     }
-//   ]
-// }
