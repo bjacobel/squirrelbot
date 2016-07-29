@@ -19,6 +19,7 @@ module.exports = {
     'comma-dangle': [2, 'never'],
     'func-names': 0,
     'max-len': [2, 120, 2],
-    'no-else-return': 0
+    'no-else-return': 0,
+    'no-console': 0
   }
 };
