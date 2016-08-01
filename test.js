@@ -1,7 +1,7 @@
 import { handler } from './src/index';
 
 const mail = {
-  message: 'subject=foo&body-plain=bar'
+  message: require('./message.js').data
 };
 
 handler(mail, null, (err, msg) => {
