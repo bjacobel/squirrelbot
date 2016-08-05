@@ -4,22 +4,21 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: {
       modules: true,
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   environments: {
     es6: true,
-    jest: true
+    jest: true,
   },
   extends: [
-    'eslint-config-airbnb-base'
+    'eslint-config-airbnb-base',
   ],
   rules: {
     'arrow-body-style': 0,
-    'comma-dangle': [2, 'never'],
     'func-names': 0,
     'max-len': [2, 120, 2],
     'no-else-return': 0,
-    'no-console': 0
-  }
+    'no-console': 0,
+  },
 };

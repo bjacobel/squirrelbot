@@ -2,10 +2,12 @@
   "name": "squirrelbot",
   "version": "1.0.0",
   "description": "Convert GitHub emails to Slack notifications",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "deploy": "babel src --out-dir dist && ./deploy.sh",
-    "test": "babel-node test.js"
+    "deploy": "./deploy.sh",
+    "test": "jest",
+    "lint": "eslint .",
+    "coveralls": "cat coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -14,13 +16,22 @@
   "author": "Brian Jacobel <bjacobel@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "vinz": "0.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",
+    "babel-jest": "^14.1.0",
     "babel-preset-es2015-node4": "^2.1.0",
+    "coveralls": "^2.11.12",
     "eslint": "^3.1.1",
     "eslint-config-airbnb-base": "^5.0.0",
-    "eslint-plugin-import": "^1.12.0"
+    "eslint-plugin-import": "^1.12.0",
+    "jest": "^14.1.0"
+  },
+  "jest": {
+    "testRegex": "tests/.*-test.js$",
+    "mocksPattern": "(?:[\\/]|^)mocks[\\/]",
+    "collectCoverage": true
   }
 }

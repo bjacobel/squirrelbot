@@ -1,9 +1,3 @@
-import { handler } from './src/index';
-
-const mail = {
-  message: require('./message.js').newPr
-};
-
 handler(mail, null, (err, msg) => {
   if (err) {
     console.error(err);

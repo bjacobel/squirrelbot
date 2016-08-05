@@ -1,5 +1,7 @@
 #!/bin/bash
 
+babel src --out-dir dist
+
 pushd dist
 
 cp ../package.json ./
@@ -7,7 +9,7 @@ npm install --production
 
 zip -r function.zip ./*
 
-aws --profile=bjacobel lambda update-function-code \
+aws lambda update-function-code \
   --function-name github-slack-notifier \
   --zip-file fileb://`pwd`/function.zip \
   | jq
