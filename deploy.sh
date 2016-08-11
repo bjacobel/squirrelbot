@@ -1,6 +1,6 @@
 #!/bin/bash
 
-babel src --out-dir dist
+$(npm bin)/babel src --out-dir dist
 
 pushd dist
 
@@ -9,7 +9,7 @@ npm install --production
 
 cp -r ../secrets ./
 
-zip -r function.zip ./*
+zip -ru function.zip ./*
 
 aws lambda update-function-code \
   --function-name github-slack-notifier \

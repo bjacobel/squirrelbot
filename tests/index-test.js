@@ -29,6 +29,9 @@ describe('the main handler', () => {
 
     describe(`using ${name} fixture`, () => {
       beforeEach(() => {
+        post.mockImplementation(() => {
+          return new Promise((resolve) => resolve('it worked'));
+        });
         handler({ message: raw }, null, expectNotError);
       });
 
@@ -46,6 +49,13 @@ describe('the main handler', () => {
 
       it('calls Slack post code with parsed link', () => {
         expect(post).lastCalledWith(anyBut({ link }));
+      });
+
+      it('calls callback with success message when done', () => {
+        return handler({ message: raw }, null, (response) => {
+          expect(response.data).toEqual(raw);
+          expect(response.message).toMatch('it worked');
+        });
       });
     });
   });

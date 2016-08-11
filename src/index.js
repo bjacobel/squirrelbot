@@ -31,6 +31,13 @@ export const handler = (event, context, callback) => {  // eslint-disable-line i
       message: userMessage,
       username: jsonEvent.from.split('<')[0].trim(),
       link: replyLink,
+    }).then((msg) => {
+      callback(null, {
+        message: msg,
+        data: event.message,
+      });
+    }).catch((err) => {
+      throw new Error(err);
     });
   } catch (err) {
     callback(JSON.stringify({ error: `${err.name}: ${err.message}`, event }, null, 2));
