@@ -3,12 +3,11 @@ import { parse } from 'querystring';
 import { post } from './slack';
 
 export const handler = (event, context, callback) => {  // eslint-disable-line import/prefer-default-export
-  const jsonEvent = parse(event.message);
-
   try {
+    const jsonEvent = parse(event.message);
     const message = jsonEvent['body-plain'];
 
-    let userMessage = message.split('---').slice(0, -1).join('---');
+    let userMessage = message.split('--').slice(0, -1).join('--');  // @TODO: this is super brittle
 
     const githubLinks = message.match(/https:\/\/github.com\/.*/);
     const replyLink = githubLinks[githubLinks.length - 1];

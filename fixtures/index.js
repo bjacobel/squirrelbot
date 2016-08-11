@@ -1,4 +1,5 @@
 import * as newPullRequest from './new-pr';
-import * as newComment from './new-comment';
+import * as oldStyleComment from './old-style-comment';
+import * as newStyleComment from './new-style-comment';
 
-export default [newPullRequest, newComment];
+export default [newPullRequest, newStyleComment, oldStyleComment];
