@@ -1,4 +1,5 @@
 ### squirrelbot
+[![Build Status](https://travis-ci.org/bjacobel/squirrelbot.svg?branch=master)](https://travis-ci.org/bjacobel/squirrelbot) [![Coverage Status](https://coveralls.io/repos/github/bjacobel/squirrelbot/badge.svg?branch=master)](https://coveralls.io/github/bjacobel/squirrelbot?branch=master)
 
 Get your GitHub notifications in Slack.
 
