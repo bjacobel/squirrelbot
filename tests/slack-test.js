@@ -1,5 +1,5 @@
 jest.unmock('../src/slack');
-import { post } from '../src/slack';
+// import { post } from '../src/slack';
 
 describe('slack integration code', () => {
   it('returns a promise', () => {
