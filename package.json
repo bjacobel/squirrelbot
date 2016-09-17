@@ -15,6 +15,7 @@
   "author": "Brian Jacobel <bjacobel@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "fast-html-parser": "^1.0.1",
     "request": "^2.74.0",
     "vinz": "0.0.5"
   },
