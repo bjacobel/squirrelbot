@@ -41,4 +41,5 @@ export const message = '## Description\r\n' +
                         '\r\n' +
                         'https://github.com/edx/ux-pattern-library/pull/354.patch\r\n' +
                         'https://github.com/edx/ux-pattern-library/pull/354.diff\r\n' +
-                        '\r\n';
+                        '\r\n' +
+                        '---\r\n';

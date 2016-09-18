@@ -15,10 +15,12 @@ export const handler = (event, context, callback, skipParse) => {  // eslint-dis
     const message = jsonEvent['body-plain'];
     const messageHTML = jsonEvent['body-html'];
 
-    let userMessage = message.split('--').slice(0, -1).join('--');  // @TODO: this is super brittle
+    const lines = message.split('\n');
+    let userMessage = `${lines.slice(0, -4).join('\n')}\n`;
+    const footer = lines.slice(lines.length - 4, lines.length).join('\n');
 
-    const replyLink = message.match(
-      /Reply to this email directly or view it on GitHub:\n(https:\/\/github.com\/.*)/
+    const replyLink = footer.match(
+      /Reply to this email directly or view it on GitHub:\r\n(https:\/\/github.com\/.*)/
     )[1];
 
     const root = HTMLParser.parse(messageHTML, { pre: true });
@@ -28,7 +30,7 @@ export const handler = (event, context, callback, skipParse) => {  // eslint-dis
         // Skip these, user-supplied code blocks will already be backticked in the message plaintext
         return;
       } else {
-        userMessage = userMessage.replace(codeBlock.text, `\`\`\`\n${codeBlock.text}\`\`\``);
+        userMessage = userMessage.replace(codeBlock.text, `\`\`\`\r\n${codeBlock.text}\`\`\`\r\n`);
       }
     });
 

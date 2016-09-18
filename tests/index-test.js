@@ -62,7 +62,7 @@ describe('the main handler', () => {
     });
   });
 
-  fdescribe('Using the new-style code reviews', () => {
+  describe('Using the new-style code reviews', () => {
     it('parses code blocks', () => {
       post.mockImplementation(() => {
         return new Promise((resolve) => resolve('it worked'));

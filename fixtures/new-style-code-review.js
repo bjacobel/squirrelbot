@@ -66,7 +66,7 @@ asfdafa
 
 --
 You are receiving this because you are subscribed to this thread.
-Reply to this email directly or view it on GitHub:
+Reply to this email directly or view it on GitHub:\r
 https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735`,
   'body-html': `<p><b>@bjacobel</b> commented on this pull request.</p>
 
@@ -154,70 +154,74 @@ block
   from: 'Brian Jacobel <brian@bjacobel.com>',
   parsed: `bjacobel commented on this pull request.
 
-    testing review for squirrelbot
+testing review for squirrelbot
 
-    \`\`\`
-    > @@ -23,6 +23,7 @@ class SearchBox extends Component {
-           <div className="search-box">
-             <input
-               placeholder="Search"
-    +          type="search"
-    \`\`\`
-    should make sure this doesn't look super weird in Safari
+\`\`\`\r
+> @@ -23,6 +23,7 @@ class SearchBox extends Component {
+       <div className="search-box">
+         <input
+           placeholder="Search"
++          type="search"
+\`\`\`\r
 
-    \`\`\`
-    > @@ -53,10 +52,18 @@ class TagBox extends Component {
+should make sure this doesn't look super weird in Safari
 
-           tagBoxContents = (
-             <div>
-    -          <p className="gif-name copy-icon" onMouseUp={ clip }>
-    -            <span className="sliding-ul">
-    -              <span className="lightgrey">{ ROOT_URL }</span>
-    -              { activeGif.src }
-    +          <input
-    +            type="text"
-    +            className="gif-fullname-hidden"
-    +            value={ ROOT_URL + activeGif.src }
-    \`\`\`
-    Just testing a new-style review for Squirrelbot
+\`\`\`\r
+> @@ -53,10 +52,18 @@ class TagBox extends Component {
 
-    _this should be_
+       tagBoxContents = (
+         <div>
+-          <p className="gif-name copy-icon" onMouseUp={ clip }>
+-            <span className="sliding-ul">
+-              <span className="lightgrey">{ ROOT_URL }</span>
+-              { activeGif.src }
++          <input
++            type="text"
++            className="gif-fullname-hidden"
++            value={ ROOT_URL + activeGif.src }
+\`\`\`\r
 
-    \`\`\`
-    code
-    block
-    \`\`\`
+Just testing a new-style review for Squirrelbot
 
-    see a [link](https://github.com/bjacobel/gifs/pull/17/commits/fd584faa5a7f312f4373a301acac73762068c2a6#diff-560bfefb7832bf845febdb13e6f336feR66)
+_this should be_
 
-    \`\`\`
-    > -  input.value = text;
-    -  input.focus();
-    -  input.setSelectionRange(0, text.length);
-    -  document.execCommand('copy');
-    -  document.body.removeChild(input);
-    +export const copy = () => {
-    +  document.getSelection().removeAllRanges();
-    +
-    +  const copyInput = document.querySelector('.gif-fullname-hidden');
-    +  copyInput.focus();
-    +  copyInput.setSelectionRange(0, copyInput.value.length);
-    +
-    +  if (document.queryCommandSupported('copy') && document.execCommand('copy')) {
-    +    return true;
-    +  } else {
-    +    throw new Error('Copying not supported in your browser');
-    \`\`\`
-    asdf
+\`\`\`
+code
+block
+\`\`\`
 
-    \`\`\`
-    > @@ -1,6 +1,7 @@
-     @import 'vars.css';
-     @import 'colors.css';
-     @import 'app.css';
-    +@import 'mobile.css';
-    \`\`\`
-    asfdafa
+see a [link](https://github.com/bjacobel/gifs/pull/17/commits/fd584faa5a7f312f4373a301acac73762068c2a6#diff-560bfefb7832bf845febdb13e6f336feR66)
+
+\`\`\`\r
+> -  input.value = text;
+-  input.focus();
+-  input.setSelectionRange(0, text.length);
+-  document.execCommand('copy');
+-  document.body.removeChild(input);
++export const copy = () => {
++  document.getSelection().removeAllRanges();
++
++  const copyInput = document.querySelector('.gif-fullname-hidden');
++  copyInput.focus();
++  copyInput.setSelectionRange(0, copyInput.value.length);
++
++  if (document.queryCommandSupported('copy') && document.execCommand('copy')) {
++    return true;
++  } else {
++    throw new Error('Copying not supported in your browser');
+\`\`\`\r
+
+asdf
+
+\`\`\`\r
+> @@ -1,6 +1,7 @@
+ @import 'vars.css';
+ @import 'colors.css';
+ @import 'app.css';
++@import 'mobile.css';
+\`\`\`\r
+
+asfdafa
 
 `,
 }
