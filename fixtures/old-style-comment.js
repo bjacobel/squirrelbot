@@ -5,11 +5,11 @@ export const name = 'new comment';
 export const username = 'Brian Jacobel';
 export const subject = 'Re: [bjacobel/squirrelbot] Test 2 (#3)';
 export const link = 'https://github.com/bjacobel/squirrelbot/pull/3/files/5b947c48ef92651051948fbd1c4268d62056d69b#r73042578';
-export const message = '```\n' +
-                       '@@ -0,0 +1,5 @@\r\n' +
-                       '+# changes\r\n' +
-                       '+- to\r\n' +
-                       '+- the readme\n' +
+export const message = '```\r\n' +
+                       '> @@ -0,0 +1,5 @@\r\n' +
+                       '> +# changes\r\n' +
+                       '> +- to\r\n' +
+                       '> +- the readme\r\n' +
                        '```\r\n' +
                        '\r\n' +
                        'review comment\r\n' +

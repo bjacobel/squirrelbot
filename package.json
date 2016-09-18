@@ -6,8 +6,7 @@
   "scripts": {
     "deploy": "./deploy.sh",
     "test": "jest",
-    "lint": "eslint .",
-    "coveralls": "cat coverage/lcov.info | coveralls"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -16,23 +15,26 @@
   "author": "Brian Jacobel <bjacobel@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "fast-html-parser": "^1.0.1",
     "request": "^2.74.0",
     "vinz": "0.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
-    "babel-jest": "^14.1.0",
+    "babel-jest": "^15.0.0",
     "babel-preset-es2015-node4": "^2.1.0",
-    "coveralls": "^2.11.12",
     "eslint": "^3.1.1",
     "eslint-config-airbnb-base": "^5.0.0",
     "eslint-plugin-import": "^1.12.0",
-    "jest": "^14.1.0"
+    "jest": "^15.1.1"
+  },
+  "engines": {
+    "node": "4.3.2"
   },
   "jest": {
-    "testRegex": "tests/.*-test.js$",
+    "automock": true,
     "mocksPattern": "(?:[\\/]|^)mocks[\\/]",
-    "collectCoverage": true
+    "testRegex": "tests/.*-test.js$"
   }
 }

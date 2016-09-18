@@ -1,8 +1,10 @@
 jest.unmock('../src/index');
+jest.unmock('fast-html-parser');
 import { handler } from '../src/index';
 
 jest.unmock('../fixtures');
 import fixtures from '../fixtures';
+import newStyleCodeReview from '../fixtures/new-style-code-review';
 
 import { post } from '../src/slack';
 
@@ -56,6 +58,22 @@ describe('the main handler', () => {
           expect(response.data).toEqual(raw);
           expect(response.message).toMatch('it worked');
         });
+      });
+    });
+  });
+
+  describe('Using the new-style code reviews', () => {
+    it('parses code blocks', () => {
+      post.mockImplementation(() => {
+        return new Promise((resolve) => resolve('it worked'));
+      });
+
+      handler(newStyleCodeReview, null, expectNotError, true);
+      expect(post).lastCalledWith({
+        subject: 'test',
+        username: 'Brian Jacobel',
+        link: 'https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735',
+        message: newStyleCodeReview.parsed,
       });
     });
   });

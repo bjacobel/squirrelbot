@@ -1,16 +1,19 @@
 language: node_js
 sudo: false
 node_js:
-  - "4.3"
+- '4.3'
 cache:
   directories:
   - node_modules
 install:
-  - npm install --development
+- npm install --development
 script:
-  - npm run lint
-  - npm run test
-after_script:
-  - npm run coveralls
+- npm run lint
+- npm run test -- --coverage
 after_success:
-  - if [ $TRAVIS_BRANCH == "master" ]; then npm run deploy; fi
+- bash <(curl -s https://codecov.io/bash)
+- if [ $TRAVIS_BRANCH == "master" ]; then npm run deploy; fi
+notifications:
+  email: false
+  slack:
+    secure: JkIwNZDL8pc9bAoO+9t682glp0zCyqxwTdvgmpeWJz0P+U+jdcRLfMhLbs+7f6pdkaOLe2JEZqV3Qf3bof5C4lEzv85Fs8bdpeUD1ISrdTIUhZD+YpnnwHLa9u5ALCwEoMXTmhUppn+W1XCaHQc41sH+aWamZCALKKwmY6o+gIw4gjI4tWW9w6Ls7m5C+QUVer7fbDQZM3f9tzfjduyhOYpd1qhEpRHB64J4lw2tSLAji8609rQmjPUU+rFokHlE4ra5MujMEs0aWZLMlndycayF3gLcGmsN5QYKw8aozzFAVIWoqvuQuW5e9wW3gHc8CqC0Lc/dKoSeFeLSIhNdMlAm8DEwzi1SGFJ1s+SCy8aBntfMiDA5Ulv2XiVBnHKejTBaFugPWmsOLZoSXS1t0J0cCV0o4h4hBzIiper/YZPxA+lnj3+ILM5WbAysh/DjurGl/y61gVBW3ELvKUENxeFFucKRNRU+RWaDUEeeo/IimTZEdeZMUWZwmgOFYnCQitQrLfsWbKodQ2ACbYlRDcMQehCbhOuZSEvNpD4Ozcrw5FBXXU6Qe7ssgCJNADJ/vGhu92f9GFOjJ9HSzWCzE2VMLfI8hgERXgl/yM2UqHr/sZWKjQkKrS2WUvuBm8kpoDqwncYoxJvyTAOI9whI7yTIUeDH9uSVgjgWeyDdBL0=
