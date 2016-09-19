@@ -1,4 +1,3 @@
-import Vinz from 'vinz';
 import request from 'request';
 
 jest.unmock('../src/slack');
