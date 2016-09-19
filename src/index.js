@@ -10,14 +10,20 @@ const parseBody = (lines) => {
 const parseReply = (lines) => {
   const footer = lines.slice(lines.length - 4, lines.length).join('\n');
 
-  return footer.match(
+  const match = footer.match(
     /Reply to this email directly or view it on GitHub:\r\n(https:\/\/github.com\/.*)/
-  )[1];
+  );
+
+  if (match.length >= 2) {
+    return match[1];
+  } else {
+    return 'https://github.com';
+  }
 };
 
-const parseCode = (messageHTML, userMessage) => {
+const parseCode = (messageHTML, message) => {
   const root = HTMLParser.parse(messageHTML, { pre: true });
-  let messageWithBacktickedCode = userMessage;
+  let messageWithBacktickedCode = message;
   const codeBlocks = root.querySelectorAll('pre');
 
   codeBlocks.forEach((codeBlock) => {
@@ -35,8 +41,8 @@ const parseCode = (messageHTML, userMessage) => {
   return messageWithBacktickedCode;
 };
 
-const parseImages = (userMessage) => {
-  let parsedForImages = userMessage;
+const parseImages = (message) => {
+  let parsedForImages = message;
 
   // Match inline images
   const inlineRegexp = new RegExp(/!\[(.*)\]\((.*)\)/g);
@@ -50,8 +56,8 @@ const parseImages = (userMessage) => {
   return parsedForImages;
 };
 
-const parseLinks = (userMessage) => {
-  let parsedForLinks = userMessage;
+const parseLinks = (message) => {
+  let parsedForLinks = message;
 
   // Match links to images
   const linkRegexp = new RegExp(/\[(.*)\]\((.*)\)/g);
@@ -74,19 +80,20 @@ export const handler = (event, context, callback, skipParse) => {  // eslint-dis
       jsonEvent = parse(event.message);
     }
 
-    const message = jsonEvent['body-plain'];
+    let message = jsonEvent['body-plain'];
     const messageHTML = jsonEvent['body-html'];
     const lines = message.split('\n');
+    let replyLink = '';
 
-    let userMessage = parseBody(lines);
-    const replyLink = parseReply(lines);
-    userMessage = parseCode(messageHTML, userMessage);
-    userMessage = parseImages(userMessage);
-    userMessage = parseLinks(userMessage);
+    replyLink = parseReply(lines);
+    message = parseBody(lines);
+    message = parseCode(messageHTML, message);
+    message = parseImages(message);
+    message = parseLinks(message);
 
     post({
       subject: jsonEvent.subject,
-      message: userMessage,
+      message,
       username: jsonEvent.from.split('<')[0].trim(),
       link: replyLink,
     }).then((msg) => {
@@ -98,6 +105,9 @@ export const handler = (event, context, callback, skipParse) => {  // eslint-dis
       throw new Error(err);
     });
   } catch (err) {
-    callback(JSON.stringify({ error: `${err.name}: ${err.message}`, event }, null, 2));
+    callback(JSON.stringify({
+      error: `${err.name}: ${err.message}`,
+      event,
+    }, null, 2));
   }
 };
