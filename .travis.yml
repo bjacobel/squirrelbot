@@ -12,6 +12,8 @@ script:
 - npm run test -- --coverage
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
 - if [ $TRAVIS_BRANCH == "master" ]; then npm run deploy; fi
 notifications:
   email: false
