@@ -3,8 +3,13 @@ jest.unmock('fast-html-parser');
 import { handler } from '../src/index';
 
 jest.unmock('../fixtures');
-import fixtures from '../fixtures';
-import newStyleCodeReview from '../fixtures/new-style-code-review';
+import {
+  newPullRequest,
+  oldStyleComment,
+  newStyleComment,
+  newStyleCodeReview,
+  withImage,
+} from '../fixtures';
 
 import { post } from '../src/slack';
 
@@ -26,7 +31,7 @@ const anyBut = (overrides) => {
 };
 
 describe('the main handler', () => {
-  fixtures.forEach((fixture) => {
+  [newPullRequest, oldStyleComment, newStyleComment].forEach((fixture) => {
     const { raw, name, subject, message, username, link } = fixture;
 
     describe(`using ${name} fixture`, () => {
@@ -75,6 +80,24 @@ describe('the main handler', () => {
         link: 'https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735',
         message: newStyleCodeReview.parsed,
       });
+    });
+  });
+
+  describe('posts with images', () => {
+    beforeEach(() => {
+      post.mockImplementation(() => {
+        return new Promise((resolve) => resolve('it worked'));
+      });
+    });
+
+    it('handles embedded images', () => {
+      handler(withImage, null, expectNotError, true);
+      expect(post).lastCalledWith(anyBut({ message: withImage.parsed }));
+    });
+
+    it('handles links to images', () => {
+      handler(withImage, null, expectNotError, true);
+      expect(post).lastCalledWith(anyBut({ message: withImage.parsed }));
     });
   });
 });

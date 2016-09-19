@@ -190,7 +190,7 @@ code
 block
 \`\`\`
 
-see a [link](https://github.com/bjacobel/gifs/pull/17/commits/fd584faa5a7f312f4373a301acac73762068c2a6#diff-560bfefb7832bf845febdb13e6f336feR66)
+see a <https://github.com/bjacobel/gifs/pull/17/commits/fd584faa5a7f312f4373a301acac73762068c2a6#diff-560bfefb7832bf845febdb13e6f336feR66|link>
 
 \`\`\`\r
 > -  input.value = text;
