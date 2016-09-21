@@ -1,6 +1,10 @@
 jest.unmock('../src/index');
 jest.unmock('fast-html-parser');
-import { handler } from '../src/index';
+import {
+  handler,
+  parseLinks,
+  parseImages,
+} from '../src/index';
 
 jest.unmock('../fixtures');
 import {
@@ -98,6 +102,38 @@ describe('the main handler', () => {
     it('handles links to images', () => {
       handler(withImage, null, expectNotError, true);
       expect(post).lastCalledWith(anyBut({ message: withImage.parsed }));
+    });
+  });
+
+  describe('parseLinks and parseEmbeds', () => {
+    const mdLink = 'a [link](https://link.com)';
+    const mdEmbed = 'an ![embedded](https://image.com)';
+    const slackLink = 'a <https://link.com|link>';
+    const slackEmbed = 'an https://image.com';
+    const parse = (input) => parseLinks(parseImages(input));
+
+    it("parses a single link out into Slack's link format", () => {
+      expect(parse(mdLink)).toEqual(slackLink);
+    });
+
+    it("parses a single image embed out into Slack's image embed format", () => {
+      expect(parse(mdEmbed)).toEqual(slackEmbed);
+    });
+
+    it('parses two links into... two links', () => {
+      expect(parse(`${mdLink} - ${mdLink}`)).toEqual(`${slackLink} - ${slackLink}`);
+    });
+
+    it('parses two image embeds', () => {
+      expect(parse(`${mdEmbed} - ${mdEmbed}`)).toEqual(`${slackEmbed} - ${slackEmbed}`);
+    });
+
+    it('parses a link, then an embed', () => {
+      expect(parse(`${mdLink} - ${mdEmbed}`)).toEqual(`${slackLink} - ${slackEmbed}`);
+    });
+
+    it('parses an embed then a link', () => {
+      expect(parse(`${mdEmbed} - ${mdLink}`)).toEqual(`${slackEmbed} - ${slackLink}`);
     });
   });
 });
