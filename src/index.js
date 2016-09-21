@@ -41,11 +41,11 @@ const parseCode = (messageHTML, message) => {
   return messageWithBacktickedCode;
 };
 
-const parseImages = (message) => {
+export const parseImages = (message) => {
   let parsedForImages = message;
 
   // Match inline images
-  const inlineRegexp = new RegExp(/!\[(.*)\]\((.*)\)/g);
+  const inlineRegexp = new RegExp(/!\[([^\]]*)\]\(([^\)]*)\)/);
   let match = inlineRegexp.exec(parsedForImages);
 
   while (match) {
@@ -56,11 +56,11 @@ const parseImages = (message) => {
   return parsedForImages;
 };
 
-const parseLinks = (message) => {
+export const parseLinks = (message) => {
   let parsedForLinks = message;
 
   // Match links to images
-  const linkRegexp = new RegExp(/\[(.*)\]\((.*)\)/g);
+  const linkRegexp = new RegExp(/\[([^\]]*)\]\(([^\)]*)\)/);
   let match = linkRegexp.exec(parsedForLinks);
 
   while (match) {
