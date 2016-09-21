@@ -15,6 +15,7 @@ cp -r ../secrets ./
 zip -ru function.zip ./*
 
 aws lambda update-function-code \
+  --region us-east-1 \
   --function-name github-slack-notifier \
   --zip-file fileb://`pwd`/function.zip \
   | jq
