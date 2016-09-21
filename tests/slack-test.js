@@ -22,8 +22,8 @@ describe('slack integration code', () => {
     return post({
       subject: 'subject',
       message: 'message',
-      username: 'username',
-      link: 'link',
+      userFullName: 'username',
+      replyLink: 'link',
     }).then(() => {
       return expect(request).lastCalledWith(
         jasmine.objectContaining({
@@ -46,8 +46,8 @@ describe('slack integration code', () => {
     return post({
       subject: 'subject',
       message: 'message',
-      username: 'username',
-      link: 'link',
+      userFullName: 'username',
+      replyLink: 'link',
     }).then((msg) => {
       return expect(msg).toEqual(`posted message at ${new Date()}`);
     });

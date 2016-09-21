@@ -2,7 +2,7 @@ import request from 'request';
 import Vinz from 'vinz';
 
 export const post = (params) => {  // eslint-disable-line import/prefer-default-export
-  const { subject, message, username, link } = params;
+  const { subject, message, userFullName, replyLink, avatar } = params;
   const vinz = new Vinz('us-east-1');
 
   return vinz.get('slackWebhookId').then((slackWebhookId) => {
@@ -16,11 +16,12 @@ export const post = (params) => {  // eslint-disable-line import/prefer-default-
           body: {
             text: `*${subject}*\n${message}`,
             mrkdwn: true,
-            username,
+            username: userFullName,
+            icon_url: avatar,
             attachments: [
               {
                 color: '#3081B7',
-                text: `<${link}|View on GitHub>`,
+                text: `<${replyLink}|View on GitHub>`,
               },
             ],
           },
