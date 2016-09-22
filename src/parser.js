@@ -122,15 +122,20 @@ export default class Parser {
     return new Promise((resolve, reject) => {
       request(
         {
-          url: `https://api.github.com/users/${this.username}/`,
+          baseUrl: 'https://api.github.com/users/',
+          uri: this.username,
           method: 'GET',
           json: true,
+          headers: {
+            'User-Agent': 'squirrelbot',
+          },
         },
         (error, response, body) => {
           if (error || response.statusCode !== 200) {
-            reject(`got ${response.statusCode}: ${body}`);
+            reject(new Error(`got ${response.statusCode}: ${body}`));
           } else {
-            resolve(body.avatar_url);
+            this.avatar = body.avatar_url;
+            resolve();
           }
         }
       );
