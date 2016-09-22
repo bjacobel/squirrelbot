@@ -24,7 +24,7 @@ describe('main handler', () => {
         error: 'Error: err',
         event,
       }, null, 2));
-    }, true);
+    });
   });
 
   it('calls callback with error info if posting fails', () => {
@@ -37,7 +37,7 @@ describe('main handler', () => {
         error: 'Error: err',
         event,
       }, null, 2));
-    }, true);
+    });
   });
 
   it('calls callback with success if parsing and posting succeed', () => {
@@ -49,6 +49,6 @@ describe('main handler', () => {
         message: 'success',
         event,
       });
-    }, true);
+    });
   });
 });

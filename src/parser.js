@@ -3,7 +3,7 @@ import { parse } from 'querystring';
 import request from 'request';
 
 export default class Parser {
-  constructor(event, skipInitialParse) {
+  constructor(event, skipInitialParse = false) {
     // if skipInitialParse is true, event is the json we want. Else use the querystring parser
     if (skipInitialParse) {
       this.event = event;
