@@ -6,15 +6,15 @@ import { post } from '../src/slack';
 describe('slack integration code', () => {
   it('implements promise interface; can then or catch', () => {
     post({}).then((msg) => {
-      return expect(msg).toBeDefined();
+      expect(msg).toBeDefined();
     });
 
     request.mockImplementationOnce((params, callback) => {
       callback('no go');
     });
 
-    post({}).catch((err) => {
-      return expect(err).toBeDefined();
+    return post({}).catch((err) => {
+      expect(err).toBeDefined();
     });
   });
 
@@ -22,14 +22,16 @@ describe('slack integration code', () => {
     return post({
       subject: 'subject',
       message: 'message',
-      username: 'username',
-      link: 'link',
+      userFullName: 'username',
+      replyLink: 'link',
+      avatar: 'https://avat.ar',
     }).then(() => {
-      return expect(request).lastCalledWith(
+      expect(request).lastCalledWith(
         jasmine.objectContaining({
           body: jasmine.objectContaining({
             text: '*subject*\nmessage',
             username: 'username',
+            icon_url: 'https://avat.ar',
             attachments: jasmine.arrayContaining([
               jasmine.objectContaining({
                 text: '<link|View on GitHub>',
@@ -46,10 +48,10 @@ describe('slack integration code', () => {
     return post({
       subject: 'subject',
       message: 'message',
-      username: 'username',
-      link: 'link',
+      userFullName: 'username',
+      replyLink: 'link',
     }).then((msg) => {
-      return expect(msg).toEqual(`posted message at ${new Date()}`);
+      expect(msg).toEqual(`posted message at ${new Date()}`);
     });
   });
 
@@ -59,7 +61,8 @@ describe('slack integration code', () => {
     });
 
     return post({}).catch((err) => {
-      return expect(err).toEqual('got 404: body');
+      expect(err instanceof Error).toBeTruthy();
+      expect(err.message).toEqual('got 404: body');
     });
   });
 
@@ -69,7 +72,8 @@ describe('slack integration code', () => {
     });
 
     return post({}).catch((err) => {
-      return expect(err).toEqual('got 301: no go');
+      expect(err instanceof Error).toBeTruthy();
+      expect(err.message).toEqual('got 301: no go');
     });
   });
 });
