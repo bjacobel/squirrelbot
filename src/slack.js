@@ -28,7 +28,7 @@ export const post = (params) => {  // eslint-disable-line import/prefer-default-
         },
         (error, response, body) => {
           if (error || response.statusCode !== 200) {
-            reject(`got ${response.statusCode}: ${body}`);
+            reject(new Error(`got ${response.statusCode}: ${body}`));
           } else {
             resolve(`posted message at ${new Date()}`);
           }

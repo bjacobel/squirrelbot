@@ -61,7 +61,7 @@ describe('the parser class', () => {
         expect(parsedData).toEqual(jasmine.objectContaining({
           subject: 'test',
           userFullName: 'Brian Jacobel',
-          link: 'https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735',
+          replyLink: 'https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735',
           message: newStyleCodeReview.parsed,
         }));
       });
@@ -87,7 +87,7 @@ describe('the parser class', () => {
     });
 
     it("parses a single image embed out into Slack's image embed format", () => {
-      return new Parser({ 'body-plain': mdLink }, true).parseAll().then((parsedData) => {
+      return new Parser({ 'body-plain': mdEmbed }, true).parseAll().then((parsedData) => {
         expect(parsedData.message).toEqual(slackEmbed);
       });
     });
@@ -115,5 +115,5 @@ describe('the parser class', () => {
         expect(parsedData.message).toEqual(`${slackEmbed} - ${slackLink}`);
       });
     });
-});
+  });
 });

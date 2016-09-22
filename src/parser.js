@@ -1,5 +1,6 @@
 import HTMLParser from 'fast-html-parser';
 import { parse } from 'querystring';
+import request from 'request';
 
 export default class Parser {
   constructor(event, skipInitialParse) {
@@ -39,7 +40,9 @@ export default class Parser {
 
   parseBody() {
     return new Promise((resolve) => {
-      this.message = `${this.lines.slice(0, -4).join('\n')}\n`;
+      if (this.lines.length > 4) {
+        this.message = `${this.lines.slice(0, -4).join('\n')}\n`;
+      }
       resolve();
     });
   }
@@ -86,45 +89,51 @@ export default class Parser {
 
   parseImages() {
     return new Promise((resolve) => {
-      let parsedForImages = this.message;
-
-      // Match inline images
+      // Match inline (embedded) images
       const inlineRegexp = new RegExp(/!\[([^\]]*)\]\(([^\)]*)\)/);
-      let match = inlineRegexp.exec(parsedForImages);
+      let match = inlineRegexp.exec(this.message);
 
       while (match) {
-        parsedForImages = parsedForImages.replace(match[0], match[2]);
-        match = inlineRegexp.exec(parsedForImages);
+        this.message = this.message.replace(match[0], match[2]);
+        match = inlineRegexp.exec(this.message);
       }
 
-      this.message = parsedForImages;
       resolve();
     });
   }
 
   parseLinks() {
     return new Promise((resolve) => {
-      let parsedForLinks = this.message;
-
       // Match links to images
-      const linkRegexp = new RegExp(/^[^!]\[([^\]]*)\]\(([^\)]*)\)/);
-      let match = linkRegexp.exec(parsedForLinks);
+      const linkRegexp = new RegExp(/[^!]\[([^\]]*)\]\(([^\)]*)\)/);
+      let match = linkRegexp.exec(this.message);
 
       while (match) {
-        parsedForLinks = parsedForLinks.replace(match[0], `<${match[2]}|${match[1]}>`);
-        match = linkRegexp.exec(parsedForLinks);
+        // substr1 gets the extra space captured by the negative exclamation in the regex
+        this.message = this.message.replace(match[0].substr(1), `<${match[2]}|${match[1]}>`);
+        match = linkRegexp.exec(this.message);
       }
 
-      this.message = parsedForLinks;
       resolve();
     });
   }
 
   parseAvatar() {
-    return new Promise((resolve) => {
-      this.avatar = this.username;
-      resolve();
+    return new Promise((resolve, reject) => {
+      request(
+        {
+          url: `https://api.github.com/users/${this.username}/`,
+          method: 'GET',
+          json: true,
+        },
+        (error, response, body) => {
+          if (error || response.statusCode !== 200) {
+            reject(`got ${response.statusCode}: ${body}`);
+          } else {
+            resolve(body.avatar_url);
+          }
+        }
+      );
     });
   }
-
 }
