@@ -7,7 +7,7 @@ export const avatar = 'https://bjacobel.jpg';
 export const subject = 'Re: [bjacobel/squirrelbot] Test 2 (#3)';
 export const replyLink = 'https://github.com/bjacobel/squirrelbot/pull/3/files/5b947c48ef92651051948fbd1c4268d62056d69b#r73042578';
 export const message = '```\r\n' +
-                       '> @@ -0,0 +1,5 @@\r\n' +
+                       '@@ -0,0 +1,5 @@\r\n' +
                        '> +# changes\r\n' +
                        '> +- to\r\n' +
                        '> +- the readme\r\n' +

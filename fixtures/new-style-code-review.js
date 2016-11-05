@@ -157,7 +157,7 @@ block
 testing review for squirrelbot
 
 \`\`\`\r
-> @@ -23,6 +23,7 @@ class SearchBox extends Component {
+@@ -23,6 +23,7 @@ class SearchBox extends Component {
        <div className="search-box">
          <input
            placeholder="Search"
@@ -167,7 +167,7 @@ testing review for squirrelbot
 should make sure this doesn't look super weird in Safari
 
 \`\`\`\r
-> @@ -53,10 +52,18 @@ class TagBox extends Component {
+@@ -53,10 +52,18 @@ class TagBox extends Component {
 
        tagBoxContents = (
          <div>
@@ -193,7 +193,7 @@ block
 see a <https://github.com/bjacobel/gifs/pull/17/commits/fd584faa5a7f312f4373a301acac73762068c2a6#diff-560bfefb7832bf845febdb13e6f336feR66|link>
 
 \`\`\`\r
-> -  input.value = text;
+-  input.value = text;
 -  input.focus();
 -  input.setSelectionRange(0, text.length);
 -  document.execCommand('copy');
@@ -214,7 +214,7 @@ see a <https://github.com/bjacobel/gifs/pull/17/commits/fd584faa5a7f312f4373a301
 asdf
 
 \`\`\`\r
-> @@ -1,6 +1,7 @@
+@@ -1,6 +1,7 @@
  @import 'vars.css';
  @import 'colors.css';
  @import 'app.css';

@@ -65,7 +65,7 @@ https://github.com/bjacobel/squirrelbot/pull/7#pullrequestreview-486512`,
 review finished
 
 \`\`\`\r
-> @@ -0,0 +1,227 @@
+@@ -0,0 +1,227 @@
 +/* eslint-disable */
 +
 +export default {
