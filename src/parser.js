@@ -71,15 +71,21 @@ export default class Parser {
       const codeBlocks = root.querySelectorAll('pre');
 
       codeBlocks.forEach((codeBlock) => {
-        if (codeBlock.text.startsWith('<code>')) {
+        let { text } = codeBlock;
+
+        if (text.startsWith('<code>')) {
           // Skip these, user-supplied code blocks will already be backticked in the message plaintext
           return;
-        } else {
-          messageWithBacktickedCode = messageWithBacktickedCode.replace(
-            codeBlock.text,
-            `\`\`\`\r\n${codeBlock.text}\`\`\`\r\n`
-          );
         }
+
+        if (text.startsWith('> ')) {
+          text = text.slice(2, text.length);
+        }
+
+        messageWithBacktickedCode = messageWithBacktickedCode.replace(
+          codeBlock.text,
+          `\`\`\`\r\n${text}\`\`\`\r\n`
+        );
       });
 
       this.message = messageWithBacktickedCode;
