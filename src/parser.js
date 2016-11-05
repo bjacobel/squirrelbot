@@ -90,12 +90,21 @@ export default class Parser {
   parseImages() {
     return new Promise((resolve) => {
       // Match inline (embedded) images
-      const inlineRegexp = new RegExp(/!\[([^\]]*)\]\(([^\)]*)\)/);
+      const inlineRegexp = new RegExp(/!\[([^\]]*)\]\(([^\)]*)\)/);  // eslint-disable-line no-useless-escape
       let match = inlineRegexp.exec(this.message);
 
       while (match) {
         this.message = this.message.replace(match[0], match[2]);
         match = inlineRegexp.exec(this.message);
+      }
+
+      // match drag-n-dropped images (img tags)
+      const imgRegexp = new RegExp(/<img.*src="(.*)">/);
+      match = imgRegexp.exec(this.message);
+
+      while (match) {
+        this.message = this.message.replace(match[0], match[1]);
+        match = imgRegexp.exec(this.message);
       }
 
       resolve();
@@ -104,8 +113,7 @@ export default class Parser {
 
   parseLinks() {
     return new Promise((resolve) => {
-      // Match links to images
-      const linkRegexp = new RegExp(/[^!]\[([^\]]*)\]\(([^\)]*)\)/);
+      const linkRegexp = new RegExp(/[^!]\[([^\]]*)\]\(([^\)]*)\)/);  // eslint-disable-line no-useless-escape
       let match = linkRegexp.exec(this.message);
 
       while (match) {
