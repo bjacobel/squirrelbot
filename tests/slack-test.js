@@ -4,13 +4,15 @@ jest.unmock('../src/slack');
 import { post } from '../src/slack';
 
 describe('slack integration code', () => {
-  it('implements promise interface; can then or catch', () => {
-    post({}).then((msg) => {
+  it('implements promise interface: then', () => {
+    return post({}).then((msg) => {
       expect(msg).toBeDefined();
     });
+  });
 
+  it('implements promise interface: catch', () => {
     request.mockImplementationOnce((params, callback) => {
-      callback('no go');
+      callback('no go', { statusCode: 500 });
     });
 
     return post({}).catch((err) => {

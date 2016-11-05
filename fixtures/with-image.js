@@ -20,6 +20,8 @@ Test!
 
 [Another link to same image](https://gifs.bjacobel.com/internallyscreaming.gif)
 
+<img width="500" alt="an image uploaded via drag-n-drop" src="https://gifs.bjacobel.com/internallyscreaming.gif">
+
 --
 You are receiving this because you are subscribed to this thread.
 Reply to this email directly or view it on GitHub:\r
@@ -43,6 +45,8 @@ https://github.com/bjacobel/squirrelbot/pull/7#pullrequestreview-486512`,
 <p><a href="https://camo.githubusercontent.com/26ce783876ef1f461c4348c330074f0b97549f8d/68747470733a2f2f676966732e626a61636f62656c2e636f6d2f696e7465726e616c6c7973637265616d696e672e676966" target="_blank"><img src="https://camo.githubusercontent.com/26ce783876ef1f461c4348c330074f0b97549f8d/68747470733a2f2f676966732e626a61636f62656c2e636f6d2f696e7465726e616c6c7973637265616d696e672e676966" alt="" data-canonical-src="https://gifs.bjacobel.com/internallyscreaming.gif" style="max-width:100%;"></a></p>
 
 <p><a href="https://gifs.bjacobel.com/internallyscreaming.gif">Another link to same image</a></p>
+
+<p><a href="https://camo.githubusercontent.com/26ce783876ef1f461c4348c330074f0b97549f8d/68747470733a2f2f676966732e626a61636f62656c2e636f6d2f696e7465726e616c6c7973637265616d696e672e676966" target="_blank"><img src="https://camo.githubusercontent.com/26ce783876ef1f461c4348c330074f0b97549f8d/68747470733a2f2f676966732e626a61636f62656c2e636f6d2f696e7465726e616c6c7973637265616d696e672e676966" alt="an image uploaded via drag-n-drop" data-canonical-src="https://gifs.bjacobel.com/internallyscreaming.gif" width="500"></a></p>
 
 <p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">&mdash;<br />You are receiving this because you are subscribed to this thread.<br />Reply to this email directly, <a href="https://github.com/bjacobel/squirrelbot/pull/7#pullrequestreview-486512">view it on GitHub</a>, or <a href="https://github.com/notifications/unsubscribe-auth/AAY4V4swOgk7JQxrm7XSDHu9pS1asu_rks5qrdxKgaJpZM4KABR1">mute the thread</a>.<img alt="" height="1" src="https://github.com/notifications/beacon/AAY4V-dCQ6-9hBDAm2ISJhnvUO8ownagks5qrdxKgaJpZM4KABR1.gif" width="1" /></p>
 <div itemscope itemtype="http://schema.org/EmailMessage">
@@ -76,6 +80,8 @@ https://gifs.bjacobel.com/internallyscreaming.gif
 https://gifs.bjacobel.com/internallyscreaming.gif
 
 <https://gifs.bjacobel.com/internallyscreaming.gif|Another link to same image>
+
+https://gifs.bjacobel.com/internallyscreaming.gif
 
 `,
 }

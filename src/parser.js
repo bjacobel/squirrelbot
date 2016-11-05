@@ -98,13 +98,21 @@ export default class Parser {
         match = inlineRegexp.exec(this.message);
       }
 
+      // match drag-n-dropped images (img tags)
+      const imgRegexp = new RegExp(/<img.*src="(.*)">/);
+      match = imgRegexp.exec(this.message);
+
+      while (match) {
+        this.message = this.message.replace(match[0], match[1]);
+        match = imgRegexp.exec(this.message);
+      }
+
       resolve();
     });
   }
 
   parseLinks() {
     return new Promise((resolve) => {
-      // Match links to images
       const linkRegexp = new RegExp(/[^!]\[([^\]]*)\]\(([^\)]*)\)/);
       let match = linkRegexp.exec(this.message);
 
