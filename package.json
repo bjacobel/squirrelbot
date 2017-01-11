@@ -25,7 +25,7 @@
     "babel-eslint": "^7.1.1",
     "babel-jest": "^18.0.0",
     "babel-plugin-transform-export-extensions": "^6.8.0",
-    "babel-preset-es2015-node4": "^2.1.1",
+    "babel-preset-env": "^1.1.8",
     "eslint": "^3.13.1",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
