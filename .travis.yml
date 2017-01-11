@@ -1,20 +1,15 @@
 language: node_js
-sudo: false
 node_js:
 - '4.3'
-cache:
-  directories:
-  - node_modules
-install:
-- npm install --development
+cache: yarn
 script:
-- npm run lint
-- npm run test -- --coverage
+- yarn run lint
+- yarn run test -- --coverage
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-- if [ $TRAVIS_BRANCH == "master" ]; then npm run deploy; fi
+- if [ $TRAVIS_BRANCH == "master" ]; then yarn run deploy; fi
 notifications:
   email: false
   slack:
