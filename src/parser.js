@@ -52,7 +52,7 @@ export default class Parser {
       const footer = this.lines.slice(this.lines.length - 4, this.lines.length).join('\n');
 
       const match = footer.match(
-        /Reply to this email directly or view it on GitHub:\r\n(https:\/\/github.com\/.*)/
+        /Reply to this email directly or view it on GitHub:\r\n(https:\/\/github.com\/.*)/,
       );
 
       if (match && match.length >= 2) {
@@ -84,7 +84,7 @@ export default class Parser {
 
         messageWithBacktickedCode = messageWithBacktickedCode.replace(
           codeBlock.text,
-          `\`\`\`\r\n${text}\`\`\`\r\n`
+          `\`\`\`\r\n${text}\`\`\`\r\n`,
         );
       });
 
@@ -151,7 +151,7 @@ export default class Parser {
             this.avatar = body.avatar_url;
             resolve();
           }
-        }
+        },
       );
     });
   }

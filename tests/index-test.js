@@ -1,8 +1,8 @@
-jest.unmock('../src/index');
-import { handler } from '../src/index';
-
 import Parser from '../src/parser';
+import { handler } from '../src/index';
 import { post } from '../src/slack';
+
+jest.unmock('../src/index');
 
 describe('main handler', () => {
   const event = { foo: 'bar' };
