@@ -1,7 +1,8 @@
 import request from 'request';
 
-jest.unmock('../src/slack');
 import { post } from '../src/slack';
+
+jest.unmock('../src/slack');
 
 describe('slack integration code', () => {
   it('implements promise interface: then', () => {
@@ -41,7 +42,7 @@ describe('slack integration code', () => {
             ]),
           }),
         }),
-        jasmine.any(Function)
+        jasmine.any(Function),
       );
     });
   });

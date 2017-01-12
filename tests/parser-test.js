@@ -1,9 +1,4 @@
-jest.unmock('fast-html-parser');
-jest.unmock('querystring');
-jest.unmock('../src/parser');
 import Parser from '../src/parser';
-
-jest.unmock('../fixtures');
 import {
   newPullRequest,
   oldStyleComment,
@@ -11,6 +6,11 @@ import {
   newStyleCodeReview,
   withImage,
 } from '../fixtures';
+
+jest.unmock('fast-html-parser');
+jest.unmock('querystring');
+jest.unmock('../fixtures');
+jest.unmock('../src/parser');
 
 describe('the parser class', () => {
   [newPullRequest, oldStyleComment, newStyleComment].forEach((fixture) => {

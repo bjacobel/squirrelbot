@@ -32,7 +32,7 @@ export const post = (params) => {  // eslint-disable-line import/prefer-default-
           } else {
             resolve(`posted message at ${new Date()}`);
           }
-        }
+        },
       );
     });
   });
