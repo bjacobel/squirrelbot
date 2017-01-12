@@ -7,9 +7,8 @@ script:
 - yarn run test -- --coverage
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
-- if [ $TRAVIS_BRANCH == "master" ]; then yarn run deploy; fi
+- if [[ $TRAVIS_BRANCH == "master" && TRAVIS_PULL_REQUEST == false ]]; then pip install --user awscli; yarn run deploy; fi
 notifications:
   email: false
   slack:
