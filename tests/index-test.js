@@ -8,14 +8,14 @@ describe('main handler', () => {
   const event = { foo: 'bar' };
 
   beforeEach(() => {
-    post.mockImplementation(() => new Promise(resolve => resolve('success')));
+    post.mockImplementation(() => Promise.resolve('success'));
     Parser.prototype.parseAll.mockImplementation(() => new Promise(resolve => resolve({
       subject: 'subject',
     })));
   });
 
   it('calls callback with error info if parsing fails', () => {
-    Parser.prototype.parseAll.mockImplementationOnce(() => new Promise((r, reject) => reject(new Error('err'))));
+    Parser.prototype.parseAll.mockImplementationOnce(() => Promise.reject(new Error('err')));
 
     return handler(event, null, (err) => {
       expect(Parser.prototype.parseAll).toHaveBeenCalled();
@@ -28,7 +28,7 @@ describe('main handler', () => {
   });
 
   it('calls callback with error info if posting fails', () => {
-    post.mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error('err'))));
+    post.mockImplementationOnce(() => Promise.reject(new Error('err')));
 
     return handler(event, null, (err) => {
       expect(Parser.prototype.parseAll).toHaveBeenCalled();
