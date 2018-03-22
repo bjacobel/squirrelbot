@@ -116,4 +116,12 @@ describe('the parser class', () => {
       });
     });
   });
+
+  describe("details blocks", () => {
+    it("doesn't render them", () => {
+      return new Parser({ 'body-plain': `asdf <details><p>nope</p>\n<h1>idk</h1></details> 1234` }, true).parseAll().then((parsedData) => {
+        expect(parsedData).toEqual(jasmine.objectContaining({ message: "asdf  1234" }));
+      });
+    })
+  });
 });

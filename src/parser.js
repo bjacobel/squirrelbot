@@ -24,6 +24,7 @@ export default class Parser {
       this.parseBody(),
       this.parseReply(),
       this.parseCode(),
+      this.parseDetails(),
       this.parseImages(),
       this.parseLinks(),
       this.parseAvatar(),
@@ -153,6 +154,13 @@ export default class Parser {
           }
         },
       );
+    });
+  }
+
+  parseDetails() {
+    return new Promise((resolve) => {
+      this.message = this.message.replace(/<details>[\n\S\s]*<\/details>/, "");
+      resolve();
     });
   }
 }
