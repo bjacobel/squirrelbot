@@ -2,20 +2,17 @@
 
 set -e
 
-$(npm bin)/babel src --out-dir dist
+rsync -a src/* secrets package.json yarn.lock dist
 
-cd dist
+pushd dist
 
-cp ../package.json ./
-npm install --production
+yarn install --production=true
 
-cp -r ../secrets ./
+zip -ru function.zip ./
 
-zip -ru function.zip ./*
-
-aws lambda update-function-code \
+AWS_PROFILE=bjacobel aws lambda update-function-code \
   --region us-east-1 \
   --function-name github-slack-notifier \
   --zip-file fileb://`pwd`/function.zip
 
-cd ../
+popd

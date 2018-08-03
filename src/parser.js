@@ -1,22 +1,26 @@
-import HTMLParser from 'fast-html-parser';
-import { parse } from 'querystring';
-import request from 'request';
+const HTMLParser = require("fast-html-parser");
+const { URLSearchParams } = require("url");
+const request = require("request");
 
-export default class Parser {
-  constructor(event, skipInitialParse = false) {
-    // if skipInitialParse is true, event is the json we want. Else use the querystring parser
-    if (skipInitialParse) {
-      this.event = event;
-    } else {
-      this.event = parse(event.message);
-    }
+class Parser {
+  constructor(event) {
+    this.event = event.message
+      ? new URLSearchParams(event.message)
+      : new URLSearchParams(event);
 
-    this.message = this.event['body-plain'];
-    this.html = this.event['body-html'];
-    this.subject = this.event.subject;
-    this.username = this.event['X-Github-Sender'];
-    this.lines = this.message.split('\n');
-    this.userFullName = this.event.from ? this.event.from.split('<')[0].trim() : 'GitHub';
+    this.message = this.event.get("body-plain");
+    this.html = this.event.get("body-html");
+    this.subject = this.event.get("subject");
+    this.username = this.event.get("X-Github-Sender");
+    this.lines = this.message ? this.message.split("\n") : [];
+    /* eslint-disable indent */
+    this.userFullName = this.event.has("from")
+      ? this.event
+          .get("from")
+          .split("<")[0]
+          .trim()
+      : "GitHub";
+    /* eslint-enable indent */
   }
 
   parseAll() {
@@ -42,7 +46,7 @@ export default class Parser {
   parseBody() {
     return new Promise((resolve) => {
       if (this.lines.length > 4) {
-        this.message = `${this.lines.slice(0, -4).join('\n')}\n`;
+        this.message = `${this.lines.slice(0, -4).join("\n")}\n`;
       }
       resolve();
     });
@@ -50,7 +54,9 @@ export default class Parser {
 
   parseReply() {
     return new Promise((resolve) => {
-      const footer = this.lines.slice(this.lines.length - 4, this.lines.length).join('\n');
+      const footer = this.lines
+        .slice(this.lines.length - 4, this.lines.length)
+        .join("\n");
 
       const match = footer.match(
         /Reply to this email directly or view it on GitHub:\r\n(https:\/\/github.com\/.*)/,
@@ -59,7 +65,7 @@ export default class Parser {
       if (match && match.length >= 2) {
         this.replyLink = match[1];
       } else {
-        this.replyLink = 'https://github.com';
+        this.replyLink = "https://github.com";
       }
       resolve();
     });
@@ -69,17 +75,17 @@ export default class Parser {
     return new Promise((resolve) => {
       const root = HTMLParser.parse(this.html, { pre: true });
       let messageWithBacktickedCode = this.message;
-      const codeBlocks = root.querySelectorAll('pre');
+      const codeBlocks = root.querySelectorAll("pre");
 
       codeBlocks.forEach((codeBlock) => {
         let { text } = codeBlock;
 
-        if (text.startsWith('<code>')) {
+        if (text.startsWith("<code>")) {
           // Skip these, user-supplied code blocks will already be backticked in the message plaintext
           return;
         }
 
-        if (text.startsWith('> ')) {
+        if (text.startsWith("> ")) {
           text = text.slice(2, text.length);
         }
 
@@ -97,7 +103,7 @@ export default class Parser {
   parseImages() {
     return new Promise((resolve) => {
       // Match inline (embedded) images
-      const inlineRegexp = new RegExp(/!\[([^\]]*)\]\(([^\)]*)\)/);  // eslint-disable-line no-useless-escape
+      const inlineRegexp = new RegExp(/!\[([^\]]*)\]\(([^\)]*)\)/); // eslint-disable-line no-useless-escape
       let match = inlineRegexp.exec(this.message);
 
       while (match) {
@@ -120,12 +126,15 @@ export default class Parser {
 
   parseLinks() {
     return new Promise((resolve) => {
-      const linkRegexp = new RegExp(/[^!]\[([^\]]*)\]\(([^\)]*)\)/);  // eslint-disable-line no-useless-escape
+      const linkRegexp = new RegExp(/[^!]\[([^\]]*)\]\(([^\)]*)\)/); // eslint-disable-line no-useless-escape
       let match = linkRegexp.exec(this.message);
 
       while (match) {
         // substr1 gets the extra space captured by the negative exclamation in the regex
-        this.message = this.message.replace(match[0].substr(1), `<${match[2]}|${match[1]}>`);
+        this.message = this.message.replace(
+          match[0].substr(1),
+          `<${match[2]}|${match[1]}>`,
+        );
         match = linkRegexp.exec(this.message);
       }
 
@@ -137,12 +146,12 @@ export default class Parser {
     return new Promise((resolve, reject) => {
       request(
         {
-          baseUrl: 'https://api.github.com/users/',
+          baseUrl: "https://api.github.com/users/",
           uri: this.username,
-          method: 'GET',
+          method: "GET",
           json: true,
           headers: {
-            'User-Agent': 'squirrelbot',
+            "User-Agent": "squirrelbot",
           },
         },
         (error, response, body) => {
@@ -164,3 +173,5 @@ export default class Parser {
     });
   }
 }
+
+module.exports = Parser;

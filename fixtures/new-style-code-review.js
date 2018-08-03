@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-export default {
-  'body-plain': `bjacobel commented on this pull request.
+module.exports = {
+  "body-plain": `bjacobel commented on this pull request.
 
 testing review for squirrelbot
 
@@ -68,7 +68,7 @@ asfdafa
 You are receiving this because you are subscribed to this thread.
 Reply to this email directly or view it on GitHub:\r
 https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735`,
-  'body-html': `<p><b>@bjacobel</b> commented on this pull request.</p>
+  "body-html": `<p><b>@bjacobel</b> commented on this pull request.</p>
 
 <p>testing review for squirrelbot</p><hr>
 
@@ -150,8 +150,8 @@ block
 </div>
 
 <script type="application/json" data-scope="inboxmarkup">{"api_version":"1.0","publisher":{"api_key":"05dde50f1d1a384dd78767c55493e4bb","name":"GitHub"},"entity":{"external_key":"github/bjacobel/gifs","title":"bjacobel/gifs","subtitle":"GitHub repository","main_image_url":"https://cloud.githubusercontent.com/assets/143418/17495839/a5054eac-5d88-11e6-95fc-7290892c7bb5.png","avatar_image_url":"https://cloud.githubusercontent.com/assets/143418/15842166/7c72db34-2c0b-11e6-9aed-b52498112777.png","action":{"name":"Open in GitHub","url":"https://github.com/bjacobel/gifs"}},"updates":{"snippets":[{"icon":"PERSON","message":"@bjacobel reviewed #17"}],"action":{"name":"View Pull Request","url":"https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735"}}}</script>`,
-  subject: 'test',
-  from: 'Brian Jacobel <brian@bjacobel.com>',
+  subject: "test",
+  from: "Brian Jacobel <brian@bjacobel.com>",
   parsed: `bjacobel commented on this pull request.
 
 testing review for squirrelbot
@@ -223,5 +223,5 @@ asdf
 
 asfdafa
 
-`,
-}
+`
+};

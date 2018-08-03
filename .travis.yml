@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-- '4.3'
+- '8.10'
 cache: yarn
 script:
 - yarn run lint
-- yarn run test -- --coverage
+- yarn run test --coverage
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 - export PATH=$PATH:$HOME/.local/bin

@@ -1,26 +1,38 @@
 module.exports = {
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaVersion: 8,
-    sourceType: 'module',
-    ecmaFeatures: {
-      modules: true,
-    },
-  },
   env: {
     es6: true,
     jest: true,
     node: true,
-    jasmine: true,
   },
-  extends: [
-    'eslint-config-airbnb-base',
-  ],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: "script",
+  },
+  plugins: ["prettier"],
   rules: {
-    'arrow-body-style': 0,
-    'func-names': 0,
-    'max-len': [2, 120, 2],
-    'no-else-return': 0,
-    'no-console': 0,
+    indent: ["error", 2, { SwitchCase: 1 }],
+    "linebreak-style": ["error", "unix"],
+    "object-curly-spacing": ["error", "always"],
+    quotes: ["error", "double"],
+    semi: ["error", "always", { omitLastInOneLineBlock: true }],
+    "comma-dangle": ["error", "always-multiline"],
+    "one-var": ["error", { initialized: "never" }],
+    "one-var-declaration-per-line": ["error", "initializations"],
+    "no-var": "error",
+    "arrow-parens": ["error", "always"],
+    "arrow-spacing": ["error", { before: true, after: true }],
+    "prettier/prettier": [
+      "error",
+      {
+        singleQuote: false,
+        trailingComma: "all",
+        arrowParens: "always",
+      },
+    ],
+  },
+  globals: {
+    module: true,
+    process: true,
   },
 };

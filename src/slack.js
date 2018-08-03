@@ -1,17 +1,17 @@
-import request from 'request';
-import Vinz from 'vinz';
+const request = require("request");
+const Vinz = require("vinz").default;
 
-export const post = (params) => {  // eslint-disable-line import/prefer-default-export
+const post = (params) => {
   const { subject, message, userFullName, replyLink, avatar } = params;
-  const vinz = new Vinz('us-east-1');
+  const vinz = new Vinz("us-east-1");
 
-  return vinz.get('slackWebhookId').then((slackWebhookId) => {
+  return vinz.get("slackWebhookId").then((slackWebhookId) => {
     return new Promise((resolve, reject) => {
       request(
         {
-          baseUrl: 'https://hooks.slack.com/',
+          baseUrl: "https://hooks.slack.com/",
           uri: `services/${slackWebhookId}`,
-          method: 'POST',
+          method: "POST",
           json: true,
           body: {
             text: `*${subject}*\n${message}`,
@@ -20,7 +20,7 @@ export const post = (params) => {  // eslint-disable-line import/prefer-default-
             icon_url: avatar,
             attachments: [
               {
-                color: '#3081B7',
+                color: "#3081B7",
                 text: `<${replyLink}|View on GitHub>`,
               },
             ],
@@ -36,4 +36,8 @@ export const post = (params) => {  // eslint-disable-line import/prefer-default-
       );
     });
   });
+};
+
+module.exports = {
+  post,
 };
