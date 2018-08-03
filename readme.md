@@ -1,5 +1,5 @@
 ### squirrelbot
-[![Build Status](https://travis-ci.org/bjacobel/squirrelbot.svg?branch=master)](https://travis-ci.org/bjacobel/squirrelbot) [![codecov](https://codecov.io/gh/bjacobel/squirrelbot/branch/master/graph/badge.svg)](https://codecov.io/gh/bjacobel/squirrelbot)
+[![Build Status](https://travis-ci.org/bjacobel/squirrelbot.svg?branch=master)](https://travis-ci.org/bjacobel/squirrelbot) [![codecov](https://codecov.io/gh/bjacobel/squirrelbot/branch/master/graph/badge.svg)](https://codecov.io/gh/bjacobel/squirrelbot) [![Greenkeeper badge](https://badges.greenkeeper.io/bjacobel/squirrelbot.svg)](https://greenkeeper.io/)
 
 Get your GitHub notifications in Slack.
 
