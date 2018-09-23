@@ -1,8 +1,10 @@
-const Parser = require("../src/parser");
+const Parser = require("../src/Parser");
 const { handler } = require("../src/index");
 const { post } = require("../src/slack");
 
 jest.unmock("../src/index");
+jest.unmock("../src/GitHubParser");
+jest.unmock("../src/JiraParser");
 
 describe("main handler", () => {
   const event = { foo: "bar" };

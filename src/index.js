@@ -1,8 +1,19 @@
 const { post } = require("./slack");
-const Parser = require("./parser");
+const JiraParser = require("./JiraParser");
+const GitHubParser = require("./GitHubParser");
 
 const handler = (event, context, callback) => {
-  const parser = new Parser(event);
+  let parser;
+
+  if (
+    event.context &&
+    event.context["resource-path"] &&
+    event.context["resource-path"] === "/jira"
+  ) {
+    parser = new JiraParser(event);
+  } else {
+    parser = new GitHubParser(event);
+  }
 
   return parser
     .parseAll()

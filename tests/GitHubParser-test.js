@@ -1,4 +1,4 @@
-const Parser = require("../src/parser");
+const GitHubParser = require("../src/GitHubParser");
 const {
   newPullRequest,
   oldStyleComment,
@@ -9,9 +9,10 @@ const {
 
 jest.unmock("fast-html-parser");
 jest.unmock("../fixtures");
-jest.unmock("../src/parser");
+jest.unmock("../src/Parser");
+jest.unmock("../src/GitHubParser");
 
-describe("the parser class", () => {
+describe("the github parser class", () => {
   [newPullRequest, oldStyleComment, newStyleComment].forEach((fixture) => {
     const {
       raw,
@@ -27,7 +28,7 @@ describe("the parser class", () => {
       let parser;
 
       beforeEach(() => {
-        parser = new Parser({ message: raw });
+        parser = new GitHubParser({ message: raw });
       });
 
       it("parses subject", () => {
@@ -64,17 +65,19 @@ describe("the parser class", () => {
 
   describe("Using the new-style code reviews", () => {
     it("parses multiple code blocks", () => {
-      return new Parser(newStyleCodeReview).parseAll().then((parsedData) => {
-        expect(parsedData).toEqual(
-          expect.objectContaining({
-            subject: "test",
-            userFullName: "Brian Jacobel",
-            replyLink:
-              "https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735",
-            message: newStyleCodeReview.parsed,
-          }),
-        );
-      });
+      return new GitHubParser(newStyleCodeReview)
+        .parseAll()
+        .then((parsedData) => {
+          expect(parsedData).toEqual(
+            expect.objectContaining({
+              subject: "test",
+              userFullName: "Brian Jacobel",
+              replyLink:
+                "https://github.com/bjacobel/gifs/pull/17#pullrequestreview-459735",
+              message: newStyleCodeReview.parsed,
+            }),
+          );
+        });
     });
   });
 
@@ -85,7 +88,7 @@ describe("the parser class", () => {
     const slackEmbed = "an https://image.com";
 
     it("parses a fixture with images properly", () => {
-      return new Parser(withImage).parseAll().then((parsedData) => {
+      return new GitHubParser(withImage).parseAll().then((parsedData) => {
         expect(parsedData).toEqual(
           expect.objectContaining({ message: withImage.parsed }),
         );
@@ -93,7 +96,7 @@ describe("the parser class", () => {
     });
 
     it("parses a single link out into Slack's link format", () => {
-      return new Parser({ "body-plain": mdLink })
+      return new GitHubParser({ "body-plain": mdLink })
         .parseAll()
         .then((parsedData) => {
           expect(parsedData.message).toEqual(slackLink);
@@ -101,7 +104,7 @@ describe("the parser class", () => {
     });
 
     it("parses a single image embed out into Slack's image embed format", () => {
-      return new Parser({ "body-plain": mdEmbed })
+      return new GitHubParser({ "body-plain": mdEmbed })
         .parseAll()
         .then((parsedData) => {
           expect(parsedData.message).toEqual(slackEmbed);
@@ -109,7 +112,7 @@ describe("the parser class", () => {
     });
 
     it("parses two links into... two links", () => {
-      return new Parser({ "body-plain": `${mdLink} - ${mdLink}` })
+      return new GitHubParser({ "body-plain": `${mdLink} - ${mdLink}` })
         .parseAll()
         .then((parsedData) => {
           expect(parsedData.message).toEqual(`${slackLink} - ${slackLink}`);
@@ -117,7 +120,7 @@ describe("the parser class", () => {
     });
 
     it("parses two image embeds", () => {
-      return new Parser({ "body-plain": `${mdEmbed} - ${mdEmbed}` })
+      return new GitHubParser({ "body-plain": `${mdEmbed} - ${mdEmbed}` })
         .parseAll()
         .then((parsedData) => {
           expect(parsedData.message).toEqual(`${slackEmbed} - ${slackEmbed}`);
@@ -125,7 +128,7 @@ describe("the parser class", () => {
     });
 
     it("parses a link, then an embed", () => {
-      return new Parser({ "body-plain": `${mdLink} - ${mdEmbed}` })
+      return new GitHubParser({ "body-plain": `${mdLink} - ${mdEmbed}` })
         .parseAll()
         .then((parsedData) => {
           expect(parsedData.message).toEqual(`${slackLink} - ${slackEmbed}`);
@@ -133,7 +136,7 @@ describe("the parser class", () => {
     });
 
     it("parses an embed then a link", () => {
-      return new Parser({ "body-plain": `${mdEmbed} - ${mdLink}` })
+      return new GitHubParser({ "body-plain": `${mdEmbed} - ${mdLink}` })
         .parseAll()
         .then((parsedData) => {
           expect(parsedData.message).toEqual(`${slackEmbed} - ${slackLink}`);
@@ -143,7 +146,7 @@ describe("the parser class", () => {
 
   describe("details blocks", () => {
     it("doesn't render them", () => {
-      return new Parser({
+      return new GitHubParser({
         "body-plain": "asdf <details><p>nope</p>\n<h1>idk</h1></details> 1234",
       })
         .parseAll()
