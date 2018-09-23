@@ -1,8 +1,8 @@
 const request = require("request");
 
-const { post } = require("../src/slack");
+const { post } = require("../slack");
 
-jest.unmock("../src/slack");
+jest.unmock("../slack");
 
 describe("slack integration code", () => {
   it("implements promise interface: then", () => {

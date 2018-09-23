@@ -1,6 +1,5 @@
 module.exports = {
   automock: true,
-  testRegex: "tests/.*-test.js$",
   collectCoverageFrom: ["src/**/*.js"],
   moduleDirectories: ["<rootDir>/node_modules"],
   testURL: "http://localhost",

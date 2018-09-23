@@ -1,16 +1,16 @@
-const GitHubParser = require("../src/GitHubParser");
+const GitHubParser = require("../GitHubParser");
 const {
   newPullRequest,
   oldStyleComment,
   newStyleComment,
   newStyleCodeReview,
   withImage,
-} = require("../fixtures");
+} = require("../../fixtures");
 
 jest.unmock("fast-html-parser");
-jest.unmock("../fixtures");
-jest.unmock("../src/Parser");
-jest.unmock("../src/GitHubParser");
+jest.unmock("../../fixtures");
+jest.unmock("../Parser");
+jest.unmock("../GitHubParser");
 
 describe("the github parser class", () => {
   [newPullRequest, oldStyleComment, newStyleComment].forEach((fixture) => {

@@ -1,10 +1,10 @@
-const Parser = require("../src/Parser");
-const { handler } = require("../src/index");
-const { post } = require("../src/slack");
+const Parser = require("../Parser");
+const { handler } = require("../index");
+const { post } = require("../slack");
 
-jest.unmock("../src/index");
-jest.unmock("../src/GitHubParser");
-jest.unmock("../src/JiraParser");
+jest.unmock("../index");
+jest.unmock("../GitHubParser");
+jest.unmock("../JiraParser");
 
 describe("main handler", () => {
   const event = { foo: "bar" };
